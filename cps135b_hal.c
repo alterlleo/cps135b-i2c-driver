@@ -18,14 +18,21 @@ int8_t cps_i2c_hal_read(uint8_t* data, uint16_t count){
 
   if (read(cps_fb, data, count) != count) {
     return I2C_READ_FAILED;
-  }
+
+  } else{
+
     return 0;
+  }
 }
 
 int8_t cps_i2c_hal_write(const uint8_t* data, uint16_t count){
   
   if(write(cps_fb, data, count) != count){
     return I2C_WRITE_FAILED;
+    
+  } else{
+
+    return 0;
   }
   
 }

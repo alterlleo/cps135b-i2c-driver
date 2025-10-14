@@ -57,7 +57,7 @@ int cps135b_convert(uint32_t p24, int16_t t16, double *kPa, double *tC){
                                                                       
 */
 
-int cps135b_init(void){
+void cps135b_init(void){
   i2c_hal_init();
 }
 

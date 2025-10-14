@@ -11,7 +11,7 @@ typedef struct{
   double temperature_C;
 } cps135b_sample;
 
-int cps135b_init(void);
+void cps135b_init(void);
 
 int cps135b_read(cps135b_sample* output);
 
