@@ -13,7 +13,7 @@ typedef struct{
 
 int cps135b_init(void);
 
-int cps135b_read(uint32_t* p24, int16_t* t16);
+int cps135b_read(cps135b_sample* output);
 
 
 

@@ -22,8 +22,30 @@ int cps135b_init(void){
   i2c_hal_init();
 }
 
-int cps135b_read(uint32_t* p24, int16_t* t16){
-  
+int cps135b_read(cps135b_sample* output){
+
+  int ret_code = 0;
+
+  cps135b_sample* tmp = output;
+  if(!tmp){
+    return -1;
+  }
+
+  ret_code = cps135b_request_measurement();
+  if(ret_code) return ret_code;
+
+  // RAW READING
+  uint8_t reg = CPS_REG_DATA;
+  int ret_code = cps_i2c_hal_write(&reg, 1);
+  if(ret_code) return ret_code;
+
+  uint8_t data[5];
+  ret_code = cps_i2c_hal_read(data, sizeof(data));
+  if (ret_code) return ret_code;
+
+  tmp -> p24_raw = ((uint32_t)data[0] << 16) | ((uint32_t)data[1] << 8) | data[2];
+  tmp -> t16_raw = (int16_t)((data[3] << 8) | data[4]);
+
 }
 
 
@@ -40,7 +62,7 @@ int cps135b_read(uint32_t* p24, int16_t* t16){
 
 int cps135b_request_measurement(void){
   uint8_t mex[2] = {CPS_CMD_MEASURE_0, CPS_CMD_MEASURE_1};
-  int ret_code = cps_i2c_hal_write(mex, 2);
+  int ret_code = cps_i2c_hal_write(mex, sizeof(mex));
 
   if(ret_code){
     return ret_code;
