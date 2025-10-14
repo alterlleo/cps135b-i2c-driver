@@ -28,7 +28,7 @@ void i2c_hal_init(void){
 
 int8_t cps_i2c_hal_read(uint8_t* data, uint16_t count){
 
-  if (read(cps_device, data, count) != count) {
+  if (read(cps_fb, data, count) != count) {
     return I2C_READ_FAILED;
   }
     return 0;

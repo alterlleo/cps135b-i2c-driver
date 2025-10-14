@@ -1,5 +1,5 @@
-#ifndef __CPS135B_H__
-#define __CPS135B_H__
+#ifndef __CPS135B_HAL_H__
+#define __CPS135B_HAL_H__
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -14,7 +14,6 @@
 #define I2C_READ_FAILED -1
 
 static int cps_fb = 0;
-static int cps_device = -1;
 
 void i2c_hal_init(void);
 
