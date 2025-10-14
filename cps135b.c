@@ -46,6 +46,13 @@ int cps135b_read(cps135b_sample* output){
   tmp -> p24_raw = ((uint32_t)data[0] << 16) | ((uint32_t)data[1] << 8) | data[2];
   tmp -> t16_raw = (int16_t)((data[3] << 8) | data[4]);
 
+  cps135b_convert(tmp -> p24_raw, tmp -> t16_raw, &(tmp -> pressure_kPa), &(tmp -> temperature_C));
+
+  if(!(tmp -> pressure_kPa && tmp -> temperature_C)){
+    return -1;
+  }
+
+  return 0;
 }
 
 
