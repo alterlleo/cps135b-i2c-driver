@@ -46,6 +46,14 @@ int cps135b_convert(uint32_t p24, int16_t t16, double *kPa, double *tC){
 // Scaling tipico: P_raw / 2^5 / 1000 -> kPa ; T_raw / 256 -> °C
   if (kPa)  *kPa  = (double)p24 / 32.0 / 1000.0;
   if (tC) *tC = (double)t16 / 256.0;
+  
+  if(!(kPa && tC)){
+    return -1;
+
+  } else{
+    return 0;
+
+  }
 }
 
 /*
@@ -85,12 +93,8 @@ int cps135b_read(cps135b_sample* output){
   tmp -> p24_raw = ((uint32_t)data[0] << 16) | ((uint32_t)data[1] << 8) | data[2];
   tmp -> t16_raw = (int16_t)((data[3] << 8) | data[4]);
 
-  cps135b_convert(tmp -> p24_raw, tmp -> t16_raw, &(tmp -> pressure_kPa), &(tmp -> temperature_C));
+  ret_code = cps135b_convert(tmp -> p24_raw, tmp -> t16_raw, &(tmp -> pressure_kPa), &(tmp -> temperature_C));
 
-  if(!(tmp -> pressure_kPa && tmp -> temperature_C)){
-    return -1;
-  }
-
-  return 0;
+  return ret_code;
 }
 
